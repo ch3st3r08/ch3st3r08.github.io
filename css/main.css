@@ -1,0 +1,15 @@
+:root {
+    /* CSS HEX */
+    --black: #000100ff;
+    --manatee: #a1a6b4ff;
+    --dark-sky-blue: #94c5ccff;
+    --beau-blue: #b4d2e7ff;
+    --cultured: #f8f8f8ff;
+
+    /* CSS HSL */
+    --black: hsla(120, 100%, 0%, 1);
+    --manatee: hsla(224, 11%, 67%, 1);
+    --dark-sky-blue: hsla(188, 35%, 69%, 1);
+    --beau-blue: hsla(205, 52%, 81%, 1);
+    --cultured: hsla(0, 0%, 97%, 1);
+}

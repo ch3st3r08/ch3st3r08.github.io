@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script async src=""></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-173581834-1');
+</script>
+<meta charset="UTF-8">
+<meta name="description" content="Calculadora de la Distribucion Multinomial.">
+  <meta name="keywords" content="Calculadora distribucion multinomial.">
+  <meta name="author" content="Jasson Castillo">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+  <style>
+/*body {background-color: rgb(25, 99, 160);}
+h1,h2,h3   {color: rgb(129, 23, 235);}
+p    {color: rgb(0, 241, 0);
+font-size: 15px;
+}
+span {
+    font-style: italic;
+    font-size: 18px;
+        font-weight: normal;
+    }*/
+</style>
+<title>Calculadora Distribución multinomial</title>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row vh-100">
+    <!-- Barra de navegación -->
+    <div class="text-light 
+      text-center 
+      pt-5 col-pixel-width-100"
+      style="background-color:var(--dark-sky-blue)">
+      <h3 class="text-dark" >Distribuciones discretas</h3>
+      <ul>
+        <li><a href="binomial.html">Binomial</a></li>
+      <li><a href="hiper.html">Hipergeométrica</a></li>
+      <li><a href="multi2.html">Multinomial</a></li>
+      <li><a href="poisson.html">Poisson</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="row h-100 justify-content-center">
+        <div class="col-12 align-self-center" style="border-style:outset;">
+          <div id="main" class="text-secondary">
+
+    <h2 align="center">CALCULADORA DISTRIBUCI&Oacute;N MULTINOMIAL </h2>
+    <h3 align="center">Desarrollada por Jasson Castillo</h3>
+    <table align="center" width="50%" border="0" cellspacing="2">
+    <tbody>
+    <tr>
+    <td><a href="../prob_y_estadistica.html">Men&uacute; Probabilidad y Estad&iacute;stica</a></td>
+    <td><a href="PROBABILIDAD20.htm">Tema Distribuciones Variables discretas</a></td>
+<td><a href="CalculadBinomNeg.htm">Calculadora Binomial negativa</a></td>
+    <td><a href="CalculadGeom.htm">Calculadora Geometrica</a></td>
+    </tr>
+    </tbody>
+    </table>
+
+    <form>
+
+    <table align="center" width="45%" border="2"><tbody>
+    <tr>
+    <td>
+    <table align="center" width="100%" border="0"><tbody>
+    <tr><th><span>n =</span></th><td><input type="number" name="nn" value="" min="0" size="7"></td><td></td></tr>
+    <tr><th><span>k =</span></th><td><input type="number" name="k" value="" min="0" size="7"></td><td>grupos</td></tr>
+    <tr><th colspan="3"><span>Ingrese x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>k</sub>. Cada vez d&eacute; click en Agregar</span></th></tr>
+    <tr><td align="right">X<sub><span id="datoi">1</span></sub>=<input type="number" min="0" name="xi" value="" size="7"></td><td>p<sub><span id="datop">1</span></sub>=<input type="number" name="pi" min="0" max="1" step="0.1" value="" size="7"></td><td><button id="button1" type="button" onclick="add()">Agregar</button></td></tr>
+    <tr><td colspan="3"><center><span id="fmultinom">Factor multinomial = </span></center></td></tr>
+    <tr><td colspan="3"><center><span id="multinom">dMultinomial = </span></center></td></tr>
+    <tr><td colspan="3"><p align="center"><button id="button2" type="button" onclick="multinom()">D. Multinomial</button></p></td></tr>
+
+    </tbody></table></td></tr></tbody></table>
+    <hr>
+
+    </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+   
+    var myarr = [];
+    var myarrp = [];
+   var conta=0;
+   var productoxi=1;
+   productopi=1;
+ function multinom(){
+      n=1*document.forms[0].nn.value;
+     //alert("Vector ingresado"+myarr);
+     //Verificacion que n=sum(xi):
+     sum=0;
+     sump=0;
+        for (j in myarr){
+         sum+=myarr[j];
+         sump+=myarrp[j];
+         productoxi=productoxi*factorial(myarr[j]);
+         productopi=productopi*Math.pow(myarrp[j],myarr[j]);
+      }
+     if((Math.abs(n-sum)<0.5) & (Math.abs(1-sump)<0.005)){
+        factormultin=factorial(n)/productoxi;
+        multinomial=factormultin*productopi;
+        document.getElementById("fmultinom").innerHTML ="nCx1x2...xk ="+ factormultin;
+            document.getElementById("multinom").innerHTML ="f(x1,x2,...,xk;p1,p2,...,pk;n) ="+ multinomial;
+     }
+     else{alert("La suma  de los datos ingresados NO son iguales a " + n+"o la suma de probabilidades No es 1.0");}
+ }
+    
+ function add(){
+     k=1*document.forms[0].k.value;
+    if (conta==(k-1)){document.forms[0].xi.disabled=true;document.forms[0].pi.disabled=true;document.forms[0].button1.disabled=true;}
+    if (conta<k){
+        x=1*document.forms[0].xi.value;
+        p=1*document.forms[0].pi.value;
+    myarr.push(x);
+    myarrp.push(p);
+    document.getElementById("datoi").innerHTML = conta+2;
+    document.getElementById("datop").innerHTML = conta+2;
+    document.forms[0].xi.value="";
+    document.forms[0].pi.value="";
+    conta++;
+  }
+  else{alert("Ya ha ingresado todos los datos. De click en dMultinomial");}
+ }
+ 
+ function factorial(a){
+       var total = 1;
+ for (i = 0; i < a; i++){
+    total = total * (a - i);
+    
+  }
+return total;
+ }
+   
+function choose(n,k){
+      var cnk=0;
+        if ((n>=0)& (k>=0)){
+        if (n>=k){
+        cnk= combinat=factorial(n)/(factorial(k)*factorial(n-k));
+    }
+    else{
+        alert("Error: el total debe ser superior a los escogidos");
+    }
+      }
+      else{
+       alert("Error: Argumentos No todos positivos");   
+     }
+   return cnk;    
+   
+   }
+    
+    
+    
+    
+    
+</script>
+
+
+<table align="center" width="50%" border="0" cellspacing="2">
+  <tbody>
+    <tr>
+      <td><a href="../prob_y_estadistica.html">Men&uacute; Probabilidad y Estad&iacute;stica</a></td>
+      <td><a href="PROBABILIDAD20.htm">Tema Distribucion Binomial</a></td>
+      <td><a href="CalculadBinomNeg.htm">Calculadora Binomial negativa</a></td>
+      <td><a href="CalculadGeom.htm">Calculadora Geometrica</a></td>
+    </tr>
+  </tbody>
+</table>
+
+
+</body>
+
+</html>

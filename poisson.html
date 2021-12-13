@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Calculadora de funciones para probabilidad discreta</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <style>
+    .col-pixel-width-100{
+  flex: 0 0 200px;
+}
+</style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row vh-100">
+        <!-- Barra de navegación -->
+        <div class="text-light 
+          text-center 
+          pt-5 col-pixel-width-100"
+          style="background-color:var(--dark-sky-blue)">
+          <h3 class="text-dark" >Distribuciones discretas</h3>
+          <ul>
+            <li><a href="binomial.html">Binomial</a></li>
+          <li><a href="hiper.html">Hipergeométrica</a></li>
+          <li><a href="multi2.html">Multinomial</a></li>
+          <li><a href="poisson.html">Poisson</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="row h-100 justify-content-center">
+            <div class="col-6 align-self-center" style="border-style:outset;">
+              <div id="main" class="text-secondary">
+                <!-- Aqui va el contenido principal-->
+                <h1 class="text-dark">Distribucion poisson</h1>
+                <p>Distribucion possion</p>
+                <form id="formularioDistribucion">
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">Tasa media de exito(λ)</label>
+                    <div class="col-sm-5">
+                      <input type=text class="form-control" size=12 id="mn" onkeyup="check(this)">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">Variable aleatoria de Poisson(x):</label>
+                    <div class="col-sm-5">
+                      <input type=text class="form-control" size=12 id="rv" onkeyup="check(this)">
+                    </div>
+                  </div>
+                  <div class="row mb-3 justify-content-center">
+                    <div class="col">
+                      <input type=button class="btn btn-block btn-primary" size=12 name="fn" value="Calcular" onClick="cum()">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col">
+                      <p>Resultado:</p>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">Distribucion poisson:</label>
+                    <div class="col-sm-5">
+                      <input type=text class="form-control" size=12 id="pd" readonly=readonly>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">Distribucion de Poisson acumulada:</label>
+                    <div class="col-sm-5">
+                      <input type=text class="form-control" size=12 id="cd" readonly=readonly>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script language=javascript>
+    function check(ad)
+    {
+      var ch=ad.value;
+      if(isNaN(ch))
+      {
+        var df=ch.substring(0,(ch.length-1))
+        ad.value=df;
+      }
+    }
+
+    function calc(l,x)
+    {
+      var e=2.71828;
+      var p=Math.pow(l,x);
+      var g=Math.pow(e,-l);
+      var r=1;
+      for(y=x;y>=1;y--)
+      {
+         r=r*y;
+      }
+      var res=Math.round(((p*g)/r)*1000)/1000;
+      return res;
+    }
+
+    function cum()
+    {
+      var l=$("#mn").val();
+      var x=$("#rv").val();
+      var ss=calc(l,x);
+
+      $("#pd").val(ss);
+      var result=0;
+      for(var z=x;z>=0;z--)
+      {
+        result=result+calc(l,z);
+      }
+      $("#cd").val(Math.round((result)*1000)/1000);
+    }
+    </script>
+  </body>
+</html>

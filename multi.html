@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Calculadora de funciones para probabilidad discreta</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <style>
+    .col-pixel-width-100{
+  flex: 0 0 200px;
+}
+</style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row vh-100">
+        <!-- Barra de navegación -->
+        <div class="text-light 
+          text-center 
+          pt-5 col-pixel-width-100"
+          style="background-color:var(--dark-sky-blue)">
+          <h3 class="text-dark" >Distribuciones discretas</h3>
+          <ul>
+            <li><a href="binomial.html">Binomial</a></li>
+          <li><a href="hiper.html">Hipergeométrica</a></li>
+          <li><a href="multi.html">Multinomial</a></li>
+          <li><a href="poisson.html">Poisson</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="row h-100 justify-content-center">
+            <div class="col-6 align-self-center" style="border-style:outset;">
+              <div id="main" class="text-secondary">
+                <!-- Aqui va el contenido principal-->
+                <h1 class="text-dark">Calculadora Distribución Multinomial</h1>
+                <form id="formularioDistribucion">
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">n= </label>
+                    <div class="col-sm-5">
+                      <input type=text class="form-control" name="nn" value="" min="0" size="7">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">k= </label>
+                    <div class="col-sm-5">
+                      <input type=text class="form-control" name="k" value="" min="0" size="7">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col">
+                      Ingrese x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>k</sub>. Cada vez d&eacute; click en Agregar</span>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">X<sub><span id="datoi">1</span></sub>=</label>
+                    <div class="col-sm-5">
+                      <input type="number" class="form-control" name="xi" value="" min="0" size="7">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+      var myarr = [];
+      var myarrp = [];
+      var conta=0;
+      var productoxi=1;
+      productopi=1;
+      function multinom(){
+        n=1*document.forms[0].nn.value;
+        //alert("Vector ingresado"+myarr);
+        //Verificacion que n=sum(xi):
+        sum=0;
+        sump=0;
+        for (j in myarr){
+          sum+=myarr[j];
+          sump+=myarrp[j];
+          productoxi=productoxi*factorial(myarr[j]);
+          productopi=productopi*Math.pow(myarrp[j],myarr[j]);
+        }
+        if((Math.abs(n-sum)<0.5) & (Math.abs(1-sump)<0.005)){
+          factormultin=factorial(n)/productoxi;
+          multinomial=factormultin*productopi;
+          document.getElementById("fmultinom").innerHTML ="nCx1x2...xk ="+ factormultin;
+          document.getElementById("multinom").innerHTML ="f(x1,x2,...,xk;p1,p2,...,pk;n) ="+ multinomial;
+        }
+          else{alert("La suma  de los datos ingresados NO son iguales a " + n+"o la suma de probabilidades No es 1.0");}
+      }
+      
+      function add(){
+        k=1*document.forms[0].k.value;
+      if (conta==(k-1)){document.forms[0].xi.disabled=true;document.forms[0].pi.disabled=true;document.forms[0].button1.disabled=true;}
+      if (conta<k){
+        x=1*document.forms[0].xi.value;
+        p=1*document.forms[0].pi.value;
+        myarr.push(x);
+        myarrp.push(p);
+        document.getElementById("datoi").innerHTML = conta+2;
+        document.getElementById("datop").innerHTML = conta+2;
+        document.forms[0].xi.value="";
+        document.forms[0].pi.value="";
+        conta++;
+      }
+      else{alert("Ya ha ingresado todos los datos. De click en dMultinomial");}
+      }
+      
+      function factorial(a){
+        var total = 1;
+        for (i = 0; i < a; i++){
+          total = total * (a - i);
+        
+        }
+        return total;
+      }
+      
+      function choose(n,k){
+        var cnk=0;
+        if ((n>=0)& (k>=0)){
+          if (n>=k){
+            cnk= combinat=factorial(n)/(factorial(k)*factorial(n-k));
+          }
+          else{
+            alert("Error: el total debe ser superior a los escogidos");
+          }
+        }
+        else{
+          alert("Error: Argumentos No todos positivos");   
+        }
+        return cnk;    
+        
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Calculadora de funciones para probabilidad discreta</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <style>
+    .col-pixel-width-100{
+  flex: 0 0 200px;
+}
+</style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row vh-100">
+        <!-- Barra de navegación -->
+        <div class="text-light 
+          text-center 
+          pt-5 col-pixel-width-100"
+          style="background-color:var(--dark-sky-blue)">
+          <h3 class="text-dark" >Distribuciones discretas</h3>
+          <ul>
+            <li><a href="binomial.html">Binomial</a></li>
+          <li><a href="hiper.html">Hipergeométrica</a></li>
+          <li><a href="multi2.html">Multinomial</a></li>
+          <li><a href="poisson.html">Poisson</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="row h-100 justify-content-center">
+            <div class="col-6 align-self-center" style="border-style:outset;">
+              <div id="main" class="text-secondary">
+                <!-- Aqui va el contenido principal-->
+                <h1 class="text-dark">Distribución Binomial</h1>
+                <p>Probabilidad P(x=k) en una distribución binomial B(n,p)</p>
+                <form id="formularioDistribucion" name="datos">
+                  <div class="row mb-3">
+                    <label for="n" class="col-sm-2 col-form-label">N= </label>
+                    <div class="col-sm-2">
+                      <input type=text class="form-control" size=12 id="n" name="n">
+                    </div>
+                    <label for="p" class="col-sm-2 col-form-label">P= </label>
+                    <div class="col-sm-2">
+                      <input type=text class="form-control" size=12 id="p" name="p">
+                    </div>
+                    <label for="k" class="col-sm-2 col-form-label">K= </label>
+                    <div class="col-sm-2">
+                      <input type=text class="form-control" size=12 id="k" name="k">
+                    </div>
+                  </div>
+                  <div class="row mb-3 justify-content-center">
+                    <div class="col">
+                      <input type=button class="btn btn-block btn-primary" size=12 name="fn" value="Calcular" onClick="bin()">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col">
+                      <p>Resultado:</p>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">P(x=k) =</label>
+                    <div class="col-sm-5">
+                      <input type=text class="form-control" size=12 id="prob" name="prob" readonly=readonly>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script >
+    
+    function fact(n)
+    {
+      f=1;
+      for (i=1;i <n+1; i++) { f=f*i };
+      return f 
+    }
+    
+    function bin()
+    {
+      k=parseInt(document.datos.k.value);
+      n=parseInt(document.datos.n.value);
+      p=parseFloat(document.datos.p.value);
+      document.datos.prob.value= fact(n)/(fact(n-k)*fact(k))*Math.pow(p,k)*Math.pow(1-p,n-k); 
+    }
+    </script>
+  </body>
+</html>

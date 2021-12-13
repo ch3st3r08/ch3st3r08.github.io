@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Calculadora de funciones para probabilidad discreta</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <style>
+      .col-pixel-width-100{
+        flex: 0 0 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row vh-100">
+        <!-- Barra de navegación -->
+        <div class="text-light 
+          text-center 
+          pt-5 col-pixel-width-100"
+          style="background-color:var(--dark-sky-blue)">
+          <h3 class="text-dark" >Distribuciones discretas</h3>
+          <ul>
+            <li><a href="binomial.html">Binomial</a></li>
+          <li><a href="hiper.html">Hipergeométrica</a></li>
+          <li><a href="multi2.html">Multinomial</a></li>
+          <li><a href="poisson.html">Poisson</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="row h-100 justify-content-center">
+            <div class="col-8 align-self-center" style="border-style:outset;">
+              <div id="main" class="text-secondary">
+                <!-- Aqui va el contenido principal-->
+                <h1 class="text-dark">Distribución hipergeométrica</h1>
+                <p><b>Para calcular la distribución hipergeométrica:</b></p>
+                <form id="formularioDistribucion">
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">Tamaño de la población:</label>
+                    <div class="col-sm-5">
+                      <input type=text class="form-control" size=12 id="ps" onkeyup="check(this)">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">Tamaño de la muestra:</label>
+                    <div class="col-sm-5">
+                      <input type=text class="form-control" size=12 id="ss" onkeyup="check(this)">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">Número de éxito en la población:</label>
+                    <div class="col-sm-5">
+                      <input type=text class="form-control" size=12 id="np" onkeyup="check(this)">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">Número de éxitos en la muestra:</label>
+                    <div class="col-sm-5">
+                      <input type=text class="form-control" size=12 id="ns" onkeyup="check(this)">
+                    </div>
+                  </div>
+                  <div class="row mb-3 justify-content-center">
+                    <div class="col">
+                      <input type=button class="btn btn-block btn-primary" size=12 name="fn" value="Calcular" onClick="cml()">
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="input1" class="col-sm-4 col-form-label">Distribución hipergeométrica:</label>
+                    <div class="col-sm-5">
+                      <input type=text class="form-control" readonly=readonly size=12 id="hd">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      function check(ad)
+      {
+        var ch=ad.value;
+        if(isNaN(ch))
+        {
+          var df=ch.substring(0,(ch.length-1));
+          ad.value=df;
+        }	
+      }
+      function cal(N,n,k,x)
+      {
+        var j=((N-k)-(n-x));
+        
+        //(N-k)!
+        var c=N-k;
+        var a=1;
+        for(g=c;g>=1;g--)
+        {
+          a=a*g;
+        }
+        //[(N-k)-(n-x)]!	
+        var e=1;
+        for(s=j;s>=1;s--)
+        {
+          e=e*s;
+        }
+        //(n-x)!
+        var d=n-x;
+        var m=1;
+        for(p=d;p>=1;p--)
+        {
+          m=m*p;
+        }
+        var per=e*m;
+        var gg=a/per;
+
+
+        //k!	
+        var f=1;
+        for(y=k;y>=1;y--)
+        {	
+          f=f*y;
+        }
+        //(k-x)!	
+        var b=1;
+        for(z=k-x;z>=1;z--)
+        {
+          b=b*z;	
+        }
+        //x!
+        var t=1;
+        for(r=x;r>=1;r--)
+        {	
+          t=t*r;
+        }
+        var com=b*t;
+        var hh=f/com
+        var gem=hh*gg;
+        
+        //N!
+        var w=1;
+        for(u=N;u>=1;u--)
+        {
+          w=w*u;
+        }
+        //(N-n)!
+        var i=N-n;
+        var cc=1;
+        for(ss=i;ss>=1;ss--)
+        {
+          cc=cc*ss;
+        }
+        //n!
+        var ff=1;
+        for(q=n;q>=1;q--)
+        {
+          ff=ff*q;
+        }
+        var opr=cc*ff;
+        var pp=w/opr;
+        var res=Math.round((gem/pp)*1000)/1000;
+      return res;
+      }
+
+      function cml()
+      {
+        var p=parseInt($('#ps').val());
+        var n=parseInt($('#ss').val());
+        var k=parseInt($('#np').val());
+        var x=parseInt($('#ns').val());
+
+        if(p>n && k>x)
+        {
+        var hh=cal(p,n,k,x);
+        $('#hd').val(hh);
+
+        var rr=0;
+        for(yy=x;yy>=0;yy--)
+        {
+          rr=rr+cal(p,n,k,yy);
+        }
+        
+        $('#cd').val(Math.round((rr)*1000)/1000);
+        }
+        else if(n>p)
+        {
+        alert('El tamaño de la muestra debe ser menor que el tamaño de la población');
+        }
+        else if(x>k)
+        {
+        alert('El número de éxito en la muestra debe ser menor que el número de éxito en la población');
+        }
+      }
+    </script>
+  </body>
+</html>
